@@ -6,7 +6,6 @@ const firebase = require('firebase');
 firebase.initializeApp(config);
 
 
-
 //Create new user
 exports.signup = (req, res) => {
     const newUser = {
@@ -20,8 +19,8 @@ const { valid, errors } = validateSignupData(newUser);
 
 if(!valid) return res.status(400).json(errors);
 
+// Default user image
 const noImg = 'dicey.png';
-
 
     let token, userId;
     db.doc(`/users/${newUser.handle}`)
@@ -92,7 +91,8 @@ if(!valid) return res.status(400).json(errors);
     });
 };
 
-// v.0.3.0 is used in tutorial
+
+// Upload user image
 exports.uploadImage = (req, res) => {
     const BusBoy = require('busboy');
     const path = require('path');
