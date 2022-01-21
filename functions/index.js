@@ -115,7 +115,7 @@ app.post('/notifications',FBAuth, markNotificationsRead);
                 });
                 return batch.commit();
             });
-        }
+        } else return true;
     });
 
     exports.onPostDelete = functions
@@ -124,17 +124,33 @@ app.post('/notifications',FBAuth, markNotificationsRead);
     .onDelete((snapshot, context) => {
         const postId = context.params.postId;
         const batch = db.batch();
-        return db.collection('comments').where('postId', '==', postId).get()
+        return db
+        .collection('comments')
+        .where('postId', '==', postId)
+        .get()
         .then((data) => {
             data.forEach(doc => {
                 batch.delete(db.doc(`/comments/${doc.id}`));
             })
-            return db.collection('likes').where('postId', '==', postId);
+            return db
+            .collection('likes')
+            .where('postId', '==', postId)
+            .get();
         })
         .then(data => {
             data.forEach(doc => {
                 batch.delete(db.doc(`/likes/${doc.id}`));
             })
-            return db.collection('likes').where('postId', '==', postId);
+            return db
+            .collection('notifications')
+            .where('postId', '==', postId)
+            .get();
         })
-    })
+        .then(data => {
+            data.forEach(doc => {
+                batch.delete(db.doc(`/notifications/${doc.id}`));
+            })
+            return batch.commit();
+        })
+        .catch(err => console.log(err));
+    });
