@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/w2m.iml" filepath="$PROJECT_DIR$/.idea/w2m.iml" />
+      <module fileurl="file://$PROJECT_DIR$/w2m-backend.iml" filepath="$PROJECT_DIR$/w2m-backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../w2m-frontend/w2m-frontend.iml" filepath="$PROJECT_DIR$/../w2m-frontend/w2m-frontend.iml" />
     </modules>
   </component>
 </project>
